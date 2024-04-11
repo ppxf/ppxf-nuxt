@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxt/image',
     '@nuxtjs/i18n',
+    '@pinia/nuxt',
   ],
   eslint: {
     /* module options */
@@ -32,5 +33,8 @@ export default defineNuxtConfig({
     lazy: true,
     langDir: 'language',
     defaultLocale: 'en',
+  },
+  imports: {
+    dirs: ['stores'],
   },
 })

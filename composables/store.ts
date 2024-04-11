@@ -1,22 +1,21 @@
 import type { WritableComputedOptions } from 'vue'
+import { useItemStore } from '~/store/item'
 import type { Item } from '~/types'
 
 export interface StoreState {
   items: Record<number, Item>
 }
 
-export const useStore = () =>
-  useState<StoreState>('store', () => ({
-    items: {},
-  }))
-
 export function fetchItem(id: number) {
-  const state = useStore()
+  const store = useItemStore()
+
+  const { items } = storeToRefs(store)
+  const { setItems } = store
 
   return reactiveLoad<Item>(
-    () => state.value.items[id],
+    () => items.value.items[id],
     (item) => {
-      state.value.items[id] = item
+      setItems(item, id)
     },
     () => $fetch('/api/hn/item', { params: { id } }),
   )
